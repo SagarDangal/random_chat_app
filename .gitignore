@@ -1,0 +1,7 @@
+.env
+.history
+.sql_app.db
+
+.idea
+venv
+**__pycache__**

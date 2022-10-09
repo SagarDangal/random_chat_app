@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color:powderblue;">
+
+<h1 style = "text-align: center;">Welcome to Random Chat</h1>
+<p style = "text-align: center;">Create your username to chat random.</p>
+<form action="/items/chat/" method=get style = "text-align: center;" target="_blank">
+
+    <label for="username">username:</label>
+    <input type="text" id="username" name="username"><br><br>
+    <input type="submit" value="Submit">
+  </form>
+  
+         <!-- <ul id='messages'>
+
+        </ul>
+         -->
+<!-- <script>
+        
+        var client_id = Date.now()
+        var ws = new WebSocket(`ws://127.0.0.1:8000/ws/${client_id}`)
+        function onCreateUser(event){
+			
+            var username = document.document.getElementById("username")
+            client_id = Date.now()
+            console.log("ok")
+
+            document.querySelector("#ws-id").textContent = client_id;
+            ws = new WebSocket(`ws://127.0.0.1:8000/ws/${client_id}`);
+            
+            }
+           
+            ws.onmessage = function(event) {
+
+                var messages = document.getElementById('messages')
+
+                var message = document.createElement('li')
+
+                var content = document.createTextNode(event.data)
+
+                message.appendChild(content)
+
+                messages.appendChild(message)
+
+            };
+
+            function sendMessage(event) {
+
+                var input = document.getElementById("messageText")
+                var channel = document.getElementById("channel_id")
+                var data = {
+                    "sendFrom":client_id,
+                    "channel_id":channel.value,
+                    "message":input.value
+                }
+
+                ws.send(JSON.stringify(data))
+
+                input.value = ''
+
+                event.preventDefault()
+
+            }
+</script> -->
+
+</body>
+</html>

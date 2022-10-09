@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color:powderblue;">
+
+<h1 style = "text-align: center;">Chat here</h1>
+<p style = "text-align: center;">[you can connected with random user here ]</p>
+<p id="user_id" style = "text-align: center;">Your ID: <span id="ws-id"></span></p>
+<style>
+    .myDiv {
+      border: 5px outset red;
+      background-color: lightblue;
+      height: 600px;
+  width: 100%; 
+  overflow-y: auto;
+    }
+    </style>
+<div class="myDiv">
+		<ul id='messages'>
+
+        </ul>
+        </div>>
+
+        <form  style = "text-align: center;" action="" onsubmit="sendMessage(event);" method="post">
+
+            <input type="text" id="messageText" placeholder="Your message" autocomplete="off"/>
+            
+
+            <button>Send</button>
+
+        </form>
+        <form  style = "text-align: center;" action="" onsubmit="next(event);" method="post">
+            
+
+            <button>next</button>
+
+        </form>
+
+
+        
+
+        <script>
+              var pairr = ''
+    function getUserName(){
+           let urlString = window.location.href
+           let paramString = urlString.split('?')[1];
+           let queryString = new URLSearchParams(paramString);
+           console.log(queryString.entries())
+           for(let pair of queryString.entries()) {
+               console.log("Key is:" + pair[0]);
+               console.log("Value is:" + pair[1]);
+               pairr = pair[1]
+           }
+       return pairr
+}
+ 
+
+
+            var client_id = Date.now()
+
+            document.querySelector("#ws-id").textContent = client_id;
+
+            var ws = new WebSocket(`ws://127.0.0.1:8000/ws/${client_id}`);
+
+            ws.onmessage = function(event) {
+
+                var messages = document.getElementById('messages')
+                var message = document.createElement('li')
+                try{
+                var content = document.createTextNode(event.data)
+                console.log(content.data)
+                var data = JSON.parse(content.data)
+                console.log(data)
+                
+                
+                var datas = data["channel_id"] + ' : ' + data["message"] 
+                var contents = document.createTextNode(datas)
+                }
+                catch{
+                    var contents = document.createTextNode(event.data)
+                }
+                
+                message.appendChild(contents)
+
+                messages.appendChild(message)
+
+            };
+
+            function sendMessage(event) {
+
+                var input = document.getElementById("messageText")
+                var channel = document.getElementById("channel_id")
+                var data = {
+                    "sendFrom":client_id,
+                    "channel_id":pairr,
+                    "message":input.value
+                }
+
+                ws.send(JSON.stringify(data))
+
+                input.value = ''
+
+                event.preventDefault()
+
+            }
+
+
+        </script>
+        <script>
+           document.getElementById("user_id").innerHTML = getUserName();  
+        </script>
+        <script>
+            function next(){
+            location.reload();
+
+            }
+            </script>
+
+
+</body>
+</html>
